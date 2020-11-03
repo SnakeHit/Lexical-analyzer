@@ -126,7 +126,7 @@ TOKEN_TYPE SEARCH_SEPARATOR(char sep) {
     for (int i = 0; i < 10; i++) {
         if (sep == SEPARATOR[i]) {
             //偏移量为69
-            return TOKEN_TYPE(i + 69);
+            return TOKEN_TYPE(i + 70);
         }
     }
     return ERROR;
@@ -136,7 +136,7 @@ TOKEN_TYPE SEARCH_OPERATOR(char* word) {
     for (int i = 0; i < 31; i++) {
         if (strcmp(OPERATION[i], word) == 0) {
             //偏移量为38
-            return TOKEN_TYPE(i + 38);
+            return TOKEN_TYPE(i + 39);
         }
     }
     return ERROR;
@@ -156,7 +156,7 @@ struct node* GET_CHAR(struct node* p) {
     char token[40], *key;
     char* forward = src;
     int i;
-    for (i = 0; i < 20; i++) {
+    for (i = 0; i < 40; i++) {
         token[i] = 0;
     }
     if (*forward == ' ') {
@@ -189,8 +189,17 @@ struct node* GET_CHAR(struct node* p) {
             token[i++] = *forward;
             forward++;
         }
-        //浮点数
-        if (*forward == '.') {
+        if (*forward == 'x') {
+            token[i++] = *forward;
+            forward++;
+            while (IS_DIGIT(*forward)) {
+                token[i++] = *forward;
+                forward++;
+            }
+            token[i] = '\0';
+            type = HEX;
+        }  //浮点数
+        else if (*forward == '.') {
             token[i++] = *forward;
             forward++;
             while (IS_DIGIT(*forward)) {
@@ -214,7 +223,7 @@ struct node* GET_CHAR(struct node* p) {
         if (IS_OPERATION(*forward)) {
             token[i++] = *forward;
             token[i] = '\0';
-            forward++;
+            forward++;//+-
             if (SEARCH_OPERATOR(token)) {
                 type = SEARCH_OPERATOR(token);
                 key = (char*)malloc(sizeof("OPERATOR"));

@@ -55,6 +55,7 @@ typedef enum TOKEN_TYPE
     ID,        /* letter_|(letter|digits)* */
     INTEGER,   /* digits */
     DECIMAL,   /* Ð¡Êý */
+    HEX, 
     CHARACTER, /* char */
     STRING,    /* char* */
     /* ÔËËã·û */

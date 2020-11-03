@@ -10,6 +10,9 @@
 typedef enum token { ID1, ID2 } token;
 int main(void) {
     token t = token(1);
-    printf("%d", t);
+    int a = 10;
+    double b = 10.1;
+    int c = 0x10;
+    printf("result:t=%d\n", t);
     return 0;
 }
